@@ -31,6 +31,7 @@ class VolcanoPlanner {
   RelSubset root
   RelNode originalRoot
   Set<RelOptRule> ruleSet
+  IdentityHashMap<RelNode, RelSubset> mapRel2Subset
 
   boolean addRule(RelOptRule rule)
   void setRoot(RelNode rel)
