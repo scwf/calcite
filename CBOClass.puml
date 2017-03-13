@@ -1,0 +1,47 @@
+@startuml
+
+interface RelNode
+abstract AbstractRelNode
+
+RelNode <|-- AbstractRelNode
+AbstractRelNode <|-- RelSubset
+RelSubset *-- RelSet
+VolcanoPlanner o-- RelSubset
+VolcanoPlanner o-- RelNode
+
+class RelSubset {
+*初始生成是每个relnode生成一个RelSubset
+RelOptCost bestCost
+RelSet set
+RelNode best
+RelNode getBest()
+void computeBestCost(RelOptPlanner planner)
+}
+
+class RelSet {
+List<RelNode> rels
+List<RelNode> parents
+List<RelSubset> subsets
+RelSet equivalentSet
+RelNode rel
+void addInternal(RelNode rel)
+}
+
+class VolcanoPlanner {
+  RelSubset root
+  RelNode originalRoot
+  Set<RelOptRule> ruleSet
+
+  boolean addRule(RelOptRule rule)
+  void setRoot(RelNode rel)
+  RelNode findBestExp()
+}
+
+class CBO {
+  凡是不一定能提升性能的rule都应该划到cbo中去考虑
+  1. 逻辑计划之间的转换
+  2. ensure requirement
+  3. 逻辑计划转物理计划
+}
+
+@enduml
