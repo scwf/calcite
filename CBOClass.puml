@@ -41,16 +41,8 @@ class VolcanoPlanner {
   RelNode findBestExp()
 }
 
-class CBO {
-  凡是不一定能提升性能的rule都应该划到cbo中去考虑
-  1. 逻辑计划之间的转换
-  2. ensure requirement
-  3. 逻辑计划转物理计划
-}
-
 Table <|-- ScannableTable
 Table <|-- FilterableTable
-Table <|-- ScannableTable
 Schema <|-- AbstractSchema
 
 interface Table {
@@ -78,7 +70,7 @@ Map<String, Table> getTableMap()
 
 Node <|-- TableScanNode
 Node <|-- JoinNode
-Node <|-- ProjectNode
+Node <|-- FilterNode
 interface Node {
 void run()
 }
@@ -86,43 +78,39 @@ class TableScanNode {
 }
 class JoinNode {
 }
-class ProjectNode {
+class FilterNode {
 }
 
+RelNode <|-- AbstractRelNode
+AbstractRelNode <|-- SingleRel
+SingleRel <|-- Filter
+Filter <|-- LogicalFilter
+Filter <|-- CassandraFilter
+Filter <|-- ElasticsearchFilter
+Filter <|-- JdbcFilter
+Filter <|-- BindableFilter
+Filter <|-- PigFilter
+Filter <|-- MongoFilter
+Filter <|-- EnumerableFilter
 
-class CSVExecution {
-按如下顺序
-CalciteMetaImpl.prepareAndExecute
-CalciteConnectionImpl.parseQuery
-CalcitePrepareImpl.prepareSql
-CalcitePrepareImpl.prepare_
-CalcitePrepareImpl.prepare2_
-Prepare.prepareSql
-convertQuery:547, SqlToRelConverter (org.apache.calcite.sql2rel)
-validate:587, SqlValidatorImpl (org.apache.calcite.sql.validate)
-validateScopedExpression:877, SqlValidatorImpl (org.apache.calcite.sql.validate)
-validate:220, SqlSelect (org.apache.calcite.sql)
-validateQuery:902, SqlValidatorImpl (org.apache.calcite.sql.validate)
-validateNamespace:921, SqlValidatorImpl (org.apache.calcite.sql.validate) [1]
-validate:84, AbstractNamespace (org.apache.calcite.sql.validate) [1]
-validateImpl:60, SelectNamespace (org.apache.calcite.sql.validate)
-validateSelect:3136, SqlValidatorImpl (org.apache.calcite.sql.validate)
-validateFrom:2894, SqlValidatorImpl (org.apache.calcite.sql.validate) [1]
-validateQuery:902, SqlValidatorImpl (org.apache.calcite.sql.validate) [2]
-validateNamespace:921, SqlValidatorImpl (org.apache.calcite.sql.validate) [2]
-validate:84, AbstractNamespace (org.apache.calcite.sql.validate) [2]
-validateImpl:171, IdentifierNamespace (org.apache.calcite.sql.validate)
-resolveImpl:108, IdentifierNamespace (org.apache.calcite.sql.validate)
-resolveTable:202, DelegatingScope (org.apache.calcite.sql.validate)
-resolveTable:98, EmptyScope (org.apache.calcite.sql.validate)
-resolve_:142, EmptyScope (org.apache.calcite.sql.validate)
-getTable:220, CalciteSchema (org.apache.calcite.jdbc)
-getImplicitTable:111, CachingCalciteSchema (org.apache.calcite.jdbc)
-get:232, CachingCalciteSchema$AbstractCached (org.apache.calcite.jdbc)
-build:57, CachingCalciteSchema$2 (org.apache.calcite.jdbc)
-build:60, CachingCalciteSchema$2 (org.apache.calcite.jdbc)
-getTableNames:87, AbstractSchema (org.apache.calcite.schema.impl)
-getTableMap:71, CsvSchema (org.apache.calcite.adapter.csv)
-}
+interface RelNode
+abstract class AbstractRelNode
+abstract class SingleRel
+abstract class Filter
+class CassandraFilter
+class ElasticsearchFilter
+class JdbcFilter
+class LogicalFilter
+class BindableFilter
+class MongoFilter
+class EnumerableFilter
+class PigFilter
 
 @enduml
+
+class CBO {
+  凡是不一定能提升性能的rule都应该划到cbo中去考虑
+  1. 逻辑计划之间的转换
+  2. ensure requirement
+  3. 逻辑计划转物理计划
+}
