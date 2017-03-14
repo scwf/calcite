@@ -333,6 +333,7 @@ public class CsvTest {
       Properties info = new Properties();
       info.put("model", jsonPath(model));
       connection = DriverManager.getConnection("jdbc:calcite:", info);
+      // calcitejdbc41statement
       statement = connection.createStatement();
       final ResultSet resultSet =
           statement.executeQuery(
