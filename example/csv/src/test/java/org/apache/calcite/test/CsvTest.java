@@ -141,6 +141,21 @@ public class CsvTest {
   /** Tests an inline schema with a non-existent directory. */
   @Test public void testBadDirectory() throws SQLException {
     Properties info = new Properties();
+    String s = "inline:"
+            + "{\n"
+            + "  version: '1.0',\n"
+            + "   schemas: [\n"
+            + "     {\n"
+            + "       type: 'custom',\n"
+            + "       name: 'bad',\n"
+            + "       factory: 'org.apache.calcite.adapter.csv.CsvSchemaFactory',\n"
+            + "       operand: {\n"
+            + "         directory: '/does/not/exist'\n"
+            + "       }\n"
+            + "     }\n"
+            + "   ]\n"
+            + "}";
+    System.out.println(s);
     info.put("model",
         "inline:"
             + "{\n"
@@ -162,7 +177,10 @@ public class CsvTest {
     // must print "directory ... not found" to stdout, but not fail
     ResultSet tables =
         connection.getMetaData().getTables(null, null, null, null);
-    tables.next();
+    while (tables.next()) {
+      Object o = tables.getString(1);
+      System.out.println(o);
+    }
     tables.close();
     connection.close();
   }
@@ -218,6 +236,11 @@ public class CsvTest {
   @Test public void testPushDownProject() throws SQLException {
     checkSql("smart", "explain plan for select * from EMPS",
         "PLAN=CsvTableScan(table=[[SALES, EMPS]], fields=[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]])\n");
+  }
+
+  @Test public void wftest() {
+    System.out.println(escapeString("hello"));
+
   }
 
   @Test public void testPushDownProject2() throws SQLException {

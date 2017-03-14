@@ -32,6 +32,9 @@ class VolcanoPlanner {
   RelNode originalRoot
   Set<RelOptRule> ruleSet
   IdentityHashMap<RelNode, RelSubset> mapRel2Subset
+  RelOptCostFactory costFactory
+  RuleQueue ruleQueue
+  List<RelTraitDef> traitDefs
 
   boolean addRule(RelOptRule rule)
   void setRoot(RelNode rel)
