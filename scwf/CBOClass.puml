@@ -83,28 +83,32 @@ class FilterNode {
 
 RelNode <|-- AbstractRelNode
 AbstractRelNode <|-- SingleRel
+AbstractRelNode <|-- BiRel
+BiRel <|-- Join
+Join <|-- LogicalJoin
+Join <|-- PigJoin
+Join <|-- BindableJoin
+
 SingleRel <|-- Filter
 Filter <|-- LogicalFilter
 Filter <|-- CassandraFilter
-Filter <|-- ElasticsearchFilter
-Filter <|-- JdbcFilter
 Filter <|-- BindableFilter
-Filter <|-- PigFilter
 Filter <|-- MongoFilter
-Filter <|-- EnumerableFilter
 
 interface RelNode
 abstract class AbstractRelNode
+abstract class BiRel
+class Join
+class LogicalJoin
+class PigJoin
+class BindableJoin
+
 abstract class SingleRel
 abstract class Filter
-class CassandraFilter
-class ElasticsearchFilter
-class JdbcFilter
 class LogicalFilter
+class CassandraFilter
 class BindableFilter
 class MongoFilter
-class EnumerableFilter
-class PigFilter
 
 @enduml
 
