@@ -47,6 +47,7 @@ public abstract class RelOptRuleCall {
   //~ Instance fields --------------------------------------------------------
 
   public final int id;
+  // wf：用来干嘛？
   protected final RelOptRuleOperand operand0;
   protected Map<RelNode, List<RelNode>> nodeInputs;
   public final RelOptRule rule;

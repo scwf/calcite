@@ -107,7 +107,7 @@ public class FrameworksTest {
             RelTraitSet desiredTraits =
                 cluster.traitSet().replace(EnumerableConvention.INSTANCE);
             final RelNode rootRel2 = planner.changeTraits(rootRel,
-                desiredTraits);
+                desiredTraits); // produce the mapRel2Subset in planner
             planner.setRoot(rootRel2);
 
             // Now, plan.

@@ -133,7 +133,7 @@ public class VolcanoPlanner extends AbstractRelOptPlanner {
    * reduce the cost. If false, the planner terminates as soon as it has found
    * any implementation, no matter how expensive.
    */
-  protected boolean ambitious = true;
+  protected boolean ambitious = true; // 在找到一个执行计划后，是否继续找寻更优的
 
   /**
    * If true, and if {@link #ambitious} is true, the planner waits a finite

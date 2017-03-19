@@ -205,6 +205,7 @@ public class RelOptRuleOperand {
    * Returns whether a relational expression matches this operand. It must be
    * of the right class and trait.
    */
+  // 重点是这个方法，判断关系表达是否匹配这个 operand（操作数？？）
   public boolean matches(RelNode rel) {
     if (!clazz.isInstance(rel)) {
       return false;

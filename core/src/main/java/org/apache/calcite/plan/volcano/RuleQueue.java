@@ -86,6 +86,8 @@ class RuleQueue {
    * phases, the matching entry is removed from this list to avoid unused
    * work.
    */
+  // 构造时rulequeue时初始化，会为每个phase 构造一个phase MatchList
+  // PhaseMatchList 里面主要 包含一个VolcanoRuleMatch的列表
   final Map<VolcanoPlannerPhase, PhaseMatchList> matchListMap =
       new EnumMap<>(VolcanoPlannerPhase.class);
 
@@ -668,6 +670,7 @@ class RuleQueue {
      * <p>Use a hunkList because {@link java.util.ArrayList} does not implement
      * remove(0) efficiently.</p>
      */
+    // 继承关系：RelOptRuleCall => VocanoRuleCall => VocanoRuleMatch
     final List<VolcanoRuleMatch> list = new ChunkList<>();
 
     /**
